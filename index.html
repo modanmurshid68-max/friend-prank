@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Scan</title>
+<style>
+* { box-sizing:border-box; }
+body {
+  margin:0; background:#050807; color:#00ff88;
+  font-family:monospace; min-height:100vh;
+  display:flex; justify-content:center; align-items:center;
+  padding:20px;
+}
+.card {
+  width:100%; max-width:440px; border:1px solid #00ff8860;
+  padding:28px 20px; border-radius:18px;
+  background:#08120e; box-shadow:0 0 30px #00ff8820;
+  text-align:center;
+}
+h1 { font-size:25px; letter-spacing:2px; }
+#status { min-height:54px; line-height:1.6; color:#8affbf; }
+.bar { background:#14231b; height:12px; border-radius:20px; overflow:hidden; }
+#fill { width:0%; height:100%; background:#00ff88; transition:width .3s; }
+#percent { margin:14px; font-size:20px; }
+button {
+  background:#00ff88; color:#001b0c; border:0;
+  padding:14px 20px; border-radius:10px;
+  font-weight:bold; font-size:16px; width:100%; margin-top:20px;
+}
+#reveal { display:none; font-size:22px; line-height:1.6; }
+.small { font-size:12px; color:#6f9e83; margin-top:20px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div id="scan">
+    <h1>⚠ SYSTEM SCANNER</h1>
+    <p>Unknown device detected...</p>
+    <p id="status">Ready to begin simulation.</p>
+    <div class="bar"><div id="fill"></div></div>
+    <div id="percent">0%</div>
+    <button id="start" onclick="startScan()">START SCAN</button>
+    <div class="small">Simulation only · No data collected</div>
+  </div>
+  <div id="reveal">
+    <h1>😂 GOT YOU!</h1>
+    <p>Your phone is safe.</p>
+    <p>This was just a fake hacker animation!</p>
+    <p>🤝 Send this to another friend?</p>
+    <button onclick="location.reload()">PLAY AGAIN</button>
+  </div>
+</div>
+<script>
+function startScan() {
+  document.getElementById("start").disabled = true;
+  document.getElementById("status").textContent = "Scanning (simulation)...";
+  let p = 0;
+  const messages = [
+    "Checking system...",
+    "Analyzing pixels...",
+    "Searching for memes...",
+    "Detecting friend...",
+    "Downloading 0 viruses...",
+    "Almost done..."
+  ];
+  const timer = setInterval(() => {
+    p += Math.floor(Math.random() * 9) + 3;
+    if (p > 100) p = 100;
+    document.getElementById("fill").style.width = p + "%";
+    document.getElementById("percent").textContent = p + "%";
+    document.getElementById("status").textContent =
+      messages[Math.min(Math.floor(p / 18), messages.length - 1)];
+    if (p >= 100) {
+      clearInterval(timer);
+      setTimeout(() => {
+        document.getElementById("scan").style.display = "none";
+        document.getElementById("reveal").style.display = "block";
+      }, 700);
+    }
+  }, 450);
+}
+</script>
+</body>
+</html>
